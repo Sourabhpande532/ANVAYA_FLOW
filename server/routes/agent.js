@@ -49,7 +49,7 @@ app.post("/", async (req, res) => {
 
 const getAllAgents = async () => {
   try {
-    const agent = await SalesAgent.find().select("name email createdAt");
+    const agent = await SalesAgent.find().select("name email");
     return agent;
   } catch (error) {
     console.error("Failed to fetched agents", error.message);
