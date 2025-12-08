@@ -56,6 +56,7 @@ const leadSchema = new mongoose.Schema({
 });
 
 // Middleware to update the `updatedAt` field on each save Or in other word Before a document is saved in MongoDB, this function will run automatically and update the field:So, every time you save a lead, its updatedAt field becomes the latest current date/time.
+// e.g frontend type name(input f) -> between(below function run) ->Submit
 
 leadSchema.pre("save", function () {
   this.updatedAt = Date.now();

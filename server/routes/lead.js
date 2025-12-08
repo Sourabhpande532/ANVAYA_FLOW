@@ -17,7 +17,7 @@ const createNewLead = async (newLead) => {
 app.post("/", async (req, res) => {
   try {
     const payload = req.body;
-    const { name, source, salesAgent, status, tags, timeToClose, priority } =
+    const { name, source, salesAgent, timeToClose} =
       payload;
     if (!name || !source || !salesAgent || !timeToClose) {
       return res.status(400).json({

@@ -15,6 +15,7 @@ app.use(cors(corsOption));
 
 app.use('/agents', require("./routes/agent"))
 app.use('/leads', require("./routes/lead"))
+app.use('/leads', require("./routes/comment"));
 
 app.get("/", (req, res) => {
   res.send("Welcome to express home!");
