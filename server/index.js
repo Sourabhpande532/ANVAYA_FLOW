@@ -13,9 +13,11 @@ const corsOption = {
 app.use(express.json());
 app.use(cors(corsOption));
 
-app.use('/agents', require("./routes/agent"))
-app.use('/leads', require("./routes/lead"))
-app.use('/leads', require("./routes/comment"));
+app.use("/agents", require("./routes/agent"));
+app.use("/leads", require("./routes/lead"));
+app.use("/leads", require("./routes/comment"));
+app.use("/report", require("./routes/report"));
+app.use("/tags",require("./routes/tags"))
 
 app.get("/", (req, res) => {
   res.send("Welcome to express home!");

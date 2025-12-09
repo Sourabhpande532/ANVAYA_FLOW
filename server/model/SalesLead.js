@@ -51,17 +51,45 @@ const leadSchema = new mongoose.Schema({
     default: Date.now,
   },
   closedAt: {
-    type: Date, // The date when the lead was closed (optional, used when status is "Closed")
+    type: Date
   },
 });
 
-// Middleware to update the `updatedAt` field on each save Or in other word Before a document is saved in MongoDB, this function will run automatically and update the field:So, every time you save a lead, its updatedAt field becomes the latest current date/time.
-// e.g frontend type name(input f) -> between(below function run) ->Submit
-
 leadSchema.pre("save", function () {
   this.updatedAt = Date.now();
+  if (this.isModified("status") && this.status === "Closed" && !this.closedAt) {
+    this.closedAt = Date.now();
+  }
 });
-// leadSchema.pre('save', function() {
-//   this.name = this.name.toLowerCase();
-// });
+
 module.exports = mongoose.model("Lead", leadSchema);
+
+/* NOTES:STUDY
+ Middleware to update the `updatedAt` field on each save Or in other word Before a document is saved in MongoDB, this function will run automatically and update the field:So, every time you save a lead, its updatedAt field becomes the latest current date/time.
+ e.g frontend type name(input f) -> between(below function run) ->Submit then stored
+ E>G
+leadSchema.pre('save', function() {
+   this.name = this.name.toLowerCase();
+ });
+
+Using: WHEN UPDATE STATUS 
+What is this.isModified('status') ?
+This function checks:true[was changed],false[stay same]
+Did the user change the "status" field Before saving?
+
+why ?
+'!this.closedAt' = “closedAt is empty, so we can now set it.”
+“closedAt is NOT set yet.”
+This is just a check to see if the field is empty.
+These are called falsy values → when you put !value, it becomes true.
+let a; undefined now console.log(!a); true 
+let b=null; null now console.log(!a); true
+let c="" empty string console.log(!c); true
+ 
+let a="hellow" console.log(!a); false
+let b=23; console.log(!b); false 
+closedAt: {
+    type: Date, // The date when the lead was closed (optional, used when status is "Closed")
+  },
+
+*/
