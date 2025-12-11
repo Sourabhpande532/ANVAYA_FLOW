@@ -5,4 +5,4 @@ const Reports = () => {
     </div>
   );
 };
-export default Reports;
+export {Reports}

@@ -16,4 +16,5 @@ export async function fetchJSON(path, opts = {}) {
  ->await means “pause inside this async function until the data comes from the server.”
  fetch() does NOT give data instantly.
  It returns a Promise (like: “I’ll give you the result later”).
+ can headers overide if someone sent Yes
  */

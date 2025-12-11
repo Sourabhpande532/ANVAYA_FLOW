@@ -5,4 +5,4 @@ const LeadDetails = () => {
     </div>
   );
 };
-export default LeadDetails;
+export { LeadDetails };

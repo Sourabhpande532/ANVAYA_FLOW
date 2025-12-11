@@ -1,13 +1,14 @@
 import "./App.css";
 import { Routes, Route, Link } from "react-router-dom";
 import Sidebar from "./component/Sidebar";
-import Dashboard from "./pages/Dashboard";
-import LeadList from "./pages/LeadList";
-import LeadDetails from "./pages/LeadDetails";
-import AddLeads from "./pages/AddLead";
-import Agents from "./pages/Agents";
-import Reports from "./pages/Reports";
-
+import {
+  Dashboard,
+  LeadDetails,
+  LeadList,
+  AddLeads,
+  Agents,
+  Reports,
+} from "./pages/index";
 function App() {
   return (
     <div className='d-flex'>

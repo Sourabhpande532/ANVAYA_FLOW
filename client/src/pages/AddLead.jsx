@@ -5,4 +5,4 @@ const AddLeads = () => {
     </div>
   );
 };
-export default AddLeads;
+export {AddLeads};

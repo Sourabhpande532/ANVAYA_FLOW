@@ -5,4 +5,4 @@ const Agents = () => {
     </div>
   );
 };
-export default Agents;
+export { Agents };
