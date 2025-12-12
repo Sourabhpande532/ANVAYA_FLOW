@@ -5,16 +5,6 @@ import { fetchJSON } from "../api";
 import { LeadContext } from "../context/LeadContext";
 import { LeadCard } from "../component/LeadsCard/LeadCard";
 
-/**
- *
- * Features:
- * - Read filters from URL on mount and when URL changes
- * - Update URL when user applies filters
- * - Fetch leads whenever the URL search changes
- * - Uses agents from LeadContext
- * - Loading state and simple error logging
- */
-
 function LeadList() {
   const { agents = [], tags = [] } = useContext(LeadContext); // agents/tags from context
   const location = useLocation();
