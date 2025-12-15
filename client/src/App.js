@@ -13,7 +13,7 @@ function App() {
   return (
     <div className='d-flex'>
       <Sidebar />
-      <div className='container-fluid p-4'>
+      <div className='container-fluid p-4 flex-grow-1 p-3'>
         <Routes>
           <Route path='/' element={<Dashboard />} />
           <Route path='/leads' element={<LeadList />} />

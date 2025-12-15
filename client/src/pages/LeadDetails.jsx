@@ -3,17 +3,31 @@ import { useParams } from "react-router-dom";
 import { fetchJSON } from "../api";
 
 function LeadDetails() {
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    type: "success", // success | danger
+  });
+  const showToast = (message, type = "success") => {
+    setToast({ show: true, message, type });
+    setTimeout(() => {
+      setToast({ show: false, message: "", type });
+    }, 3000);
+  };
+
   const { id } = useParams();
   const [lead, setLead] = useState(null);
   const [comments, setComments] = useState([]);
   const [text, setText] = useState("");
+  const [status, setStatus] = useState("");
 
   const load = async () => {
     try {
       const l = await fetchJSON("/leads/" + id);
-      setLead(l.data.lead);
-      const c = await fetchJSON("/leads/" + id + "/comments");
-      setComments(c.data.comments);
+      setLead(l?.data?.lead);
+      setStatus(l?.data?.lead?.status);
+      const comment = await fetchJSON("/leads/" + id + "/comments");
+      setComments(comment.data.comments);
     } catch (e) {
       console.error(e);
     }
@@ -25,7 +39,6 @@ function LeadDetails() {
   const addComment = async (ev) => {
     ev.preventDefault();
     try {
-      // author not determined in UI; use first author id from lead.salesAgent as example
       const body = { commentText: text, author: lead.salesAgent?._id };
       await fetchJSON("/leads/" + id + "/comments", {
         method: "POST",
@@ -33,18 +46,69 @@ function LeadDetails() {
       });
       setText("");
       load();
+      showToast("Comment added successfully", "success");
     } catch (e) {
-      alert("Failed to add comment");
+      showToast("Failed to add comment ❌", "danger");
+    }
+  };
+
+  const updateStatus = async () => {
+    try {
+      await fetchJSON("/leads/" + id, {
+        method: "PUT",
+        body: JSON.stringify({ status }),
+      });
+      load();
+      showToast("Status updated successfully", "Success");
+    } catch (e) {
+      showToast("Failed to update status ❌", "danger");
     }
   };
 
   if (!lead) return <p>Loading...</p>;
   return (
     <div>
-      <h2>{lead.name}</h2>
+      {toast.show && (
+        <div
+          className='toast show position-fixed top-0 end-0 m-3'
+          role='alert'
+          style={{ zIndex: 9999 }}>
+          <div className={`toast-header bg-${toast.type} text-white`}>
+            <strong className='me-auto'>
+              {toast.type === "success" ? "Success" : "Error"}
+            </strong>
+            <button
+              type='button'
+              className='btn-close btn-close-white'
+              onClick={() => setToast({ ...toast, show: false })}
+            />
+          </div>
+          <div className='toast-body'>{toast.message}</div>
+        </div>
+      )}
+
+      <div className='d-flex justify-content-between align-items-center'>
+        <h2>{lead.name}</h2>
+        <div>
+          <select
+            className='form-select'
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            style={{ width: 200, display: "inline-block", marginRight: 8 }}>
+            <option>New</option>
+            <option>Contacted</option>
+            <option>Qualified</option>
+            <option>Proposal Sent</option>
+            <option>Closed</option>
+          </select>
+          <button className='btn btn-sm btn-primary' onClick={updateStatus}>
+            Save
+          </button>
+        </div>
+      </div>
       <p>Agent: {lead.salesAgent?.name}</p>
       <p>Source: {lead.source}</p>
-      <p>Status: {lead.status}</p>
+      <p>Priority: {lead.priority}</p>
       <hr />
       <h5>Comments</h5>
       <form onSubmit={addComment}>
@@ -59,13 +123,13 @@ function LeadDetails() {
         <button className='btn btn-sm btn-primary'>Add Comment</button>
       </form>
       <div className='mt-3'>
-        {comments?.map((c) => (
-          <div key={c._id} className='border p-2 mb-2'>
-            <strong>{c.author?.name}</strong>{" "}
+        {comments.map((comment) => (
+          <div key={comment._id} className='border p-2 mb-2'>
+            <strong>{comment.author?.name}</strong>{" "}
             <small className='text-muted'>
-              {new Date(c.createdAt).toLocaleString()}
+              {new Date(comment.createdAt).toLocaleString()}
             </small>
-            <p>{c.commentText}</p>
+            <p>{comment.commentText}</p>
           </div>
         ))}
       </div>

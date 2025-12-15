@@ -1,0 +1,14 @@
+/* Sidebar */
+.sidebar {
+  width: 265px;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+  }
+}

@@ -37,115 +37,146 @@ const AddLeads = () => {
       await fetchJSON("/leads", { method: "POST", body: JSON.stringify(form) });
       navigate("/leads");
     } catch (e) {
-      alert("Failed: " + (e.error || JSON.stringify(e)));
+      alert("Failed to fetch");
+      console.error(e);
     }
   };
 
   return (
-    <div>
-      <h2>Add Lead</h2>
-      <form onSubmit={submit}>
-        <div className='mb-2'>
-          <label className='form-label'>Lead Name</label>
-          <input
-            required
-            name='name'
-            className='form-control'
-            value={form.name}
-            onChange={handle}
-          />
-        </div>
-        <div className='row'>
-          <div className='col-md-4 mb-2'>
-            <label className='form-label'>Source</label>
-            <select
-              name='source'
-              className='form-select'
-              value={form.source}
-              onChange={handle}>
-              <option>Website</option>
-              <option>Referral</option>
-              <option>Cold Call</option>
-              <option>Advertisement</option>
-              <option>Email</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div className='col-md-4 mb-2'>
-            <label className='form-label'>Sales Agent</label>
-            <select
-              name='salesAgent'
-              className='form-select'
-              value={form.salesAgent}
-              onChange={handle}
-              required>
-              <option value=''>-- select --</option>
-              {agents.map((a) => (
-                <option key={a._id} value={a._id}>
-                  {a.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className='col-md-2 mb-2'>
-            <label className='form-label'>Priority</label>
-            <select
-              name='priority'
-              className='form-select'
-              value={form.priority}
-              onChange={handle}>
-              <option>High</option>
-              <option>Medium</option>
-              <option>Low</option>
-            </select>
-          </div>
-          <div className='col-md-2 mb-2'>
-            <label className='form-label'>Time to Close</label>
-            <input
-              type='number'
-              min='1'
-              name='timeToClose'
-              className='form-control'
-              value={form.timeToClose}
-              onChange={handle}
-            />
-          </div>
-        </div>
+    <div className='container-fluid'>
+      {/* Page title */}
+      <div className='mb-3'>
+        <h4 className='fw-bold'>Add Lead</h4>
+        <p className='text-muted small mb-0'>
+          Create and assign a new lead to a sales agent
+        </p>
+      </div>
 
-        <div className='mb-2'>
-          <label className='form-label'>Tags</label>
-          <div className='d-flex gap-2 mb-2'>
-            <input
-              className='form-control'
-              placeholder='Add tag'
-              value={tagInput}
-              onChange={(e) => setTagInput(e.target.value)}
-            />
-            <button
-              type='button'
-              className='btn btn-outline-primary'
-              onClick={addTag}>
-              Add
-            </button>
-          </div>
-          <div>
-            {form.tags.map((tag) => (
-              <span key={tag} className='badge bg-secondary me-1'>
-                {tag}{" "}
-                <button
-                  type='button'
-                  className='btn btn-sm btn-link text-white'
-                  onClick={() => removeTag(tag)}>
-                  ❌
-                </button>
-              </span>
-            ))}
+      {/* Form Card */}
+      <div className='row'>
+        <div className='col-xl-8 col-lg-9 col-md-12'>
+          <div className='card shadow-sm'>
+            <div className='card-body'>
+              <form onSubmit={submit}>
+                {/* Lead Name */}
+                <div className='mb-3'>
+                  <label className='form-label'>Lead Name</label>
+                  <input
+                    required
+                    name='name'
+                    className='form-control'
+                    placeholder='Enter lead name'
+                    value={form.name}
+                    onChange={handle}
+                  />
+                </div>
+
+                {/* Row 1 */}
+                <div className='row'>
+                  <div className='col-md-4 mb-3'>
+                    <label className='form-label'>Source</label>
+                    <select
+                      name='source'
+                      className='form-select'
+                      value={form.source}
+                      onChange={handle}>
+                      <option>Website</option>
+                      <option>Referral</option>
+                      <option>Cold Call</option>
+                      <option>Advertisement</option>
+                      <option>Email</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+
+                  <div className='col-md-4 mb-3'>
+                    <label className='form-label'>Sales Agent</label>
+                    <select
+                      name='salesAgent'
+                      className='form-select'
+                      value={form.salesAgent}
+                      onChange={handle}
+                      required>
+                      <option value=''>-- Select Agent --</option>
+                      {agents.map((a) => (
+                        <option key={a._id} value={a._id}>
+                          {a.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className='col-md-2 mb-3'>
+                    <label className='form-label'>Priority</label>
+                    <select
+                      name='priority'
+                      className='form-select'
+                      value={form.priority}
+                      onChange={handle}>
+                      <option>High</option>
+                      <option>Medium</option>
+                      <option>Low</option>
+                    </select>
+                  </div>
+
+                  <div className='col-md-2 mb-3'>
+                    <label className='form-label'>Time to Close</label>
+                    <input
+                      type='number'
+                      min='1'
+                      name='timeToClose'
+                      className='form-control'
+                      value={form.timeToClose}
+                      onChange={handle}
+                    />
+                  </div>
+                </div>
+
+                {/* Tags */}
+                <div className='mb-4'>
+                  <label className='form-label'>Tags</label>
+
+                  <div className='input-group mb-2'>
+                    <input
+                      className='form-control'
+                      placeholder='Type tag and click Add'
+                      value={tagInput}
+                      onChange={(e) => setTagInput(e.target.value)}
+                    />
+                    <button
+                      type='button'
+                      className='btn btn-outline-primary'
+                      onClick={addTag}>
+                      Add
+                    </button>
+                  </div>
+
+                  <div className='d-flex flex-wrap gap-2'>
+                    {form.tags.map((tag) => (
+                      <span key={tag} className='badge bg-secondary'>
+                        {tag}
+                        <button
+                          type='button'
+                          className='btn btn-sm btn-link text-white ms-1 p-0'
+                          onClick={() => removeTag(tag)}>
+                          ❌
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Submit */}
+                <div className='d-flex justify-content-end'>
+                  <button className='btn btn-primary px-4'>Create Lead</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-
-        <button className='btn btn-primary'>Create Lead</button>
-      </form>
+      </div>
     </div>
   );
 };
+
 export { AddLeads };

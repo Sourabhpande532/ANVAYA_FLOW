@@ -79,10 +79,19 @@ function LeadList() {
     setFilters((prev) => ({ ...prev, [field]: value }));
   };
 
+  const deleteLead = async (id) => {
+    try {
+      await fetchJSON(`/leads/${id}`, { method: "DELETE" });
+      // instant UI update (no refresh)
+      setLeads((prev) => prev.filter((lead) => lead._id !== id));
+    } catch (error) {
+      alert("Failed to delete lead");
+    }
+  };
+
   return (
     <div>
       <h2>Leads</h2>
-
       {/* Filters card */}
       <div className='card mb-3 p-3'>
         <div className='row g-2 align-items-end'>
@@ -190,7 +199,9 @@ function LeadList() {
             {leads.length === 0 ? (
               <p>No leads found</p>
             ) : (
-              leads.map((l) => <LeadCard key={l._id} lead={l} />)
+              leads.map((lead) => (
+                <LeadCard key={lead._id} lead={lead} onDelete={deleteLead} />
+              ))
             )}
           </div>
 
