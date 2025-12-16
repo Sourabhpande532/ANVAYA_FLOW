@@ -20,7 +20,9 @@ const LeadProvider = ({ children }) => {
     async function load() {
       try {
         const data = await fetchJSON("/agents");
-        setAgents(data?.data?.agents);
+        setAgents(data?.data?.agents || []);
+        const tagResponse = await fetchJSON("/tags");
+        setTags(tagResponse?.data?.tags || []);
       } catch (error) {
         console.error("Failed to fetch agents", error);
       }

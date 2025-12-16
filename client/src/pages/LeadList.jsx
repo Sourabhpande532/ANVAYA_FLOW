@@ -146,13 +146,18 @@ function LeadList() {
 
           {/* Tags */}
           <div className='col-md-2'>
-            <label className='form-label small'>Tags (comma)</label>
-            <input
-              className='form-control'
-              placeholder='High Value,Follow-up'
+            <label className='form-label small'>Tags</label>
+            <select
+              className='form-select'
               value={filters.tags}
-              onChange={(e) => updateFilterField("tags", e.target.value)}
-            />
+              onChange={(e) => updateFilterField("tags", e.target.value)}>
+              <option value=''>All</option>
+              {tags.map((t) => (
+                <option key={t._id} value={t.name}>
+                  {t.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Sort */}
@@ -235,10 +240,10 @@ function LeadList() {
                   <div>
                     {tags.map((t) => (
                       <button
-                        key={t}
+                        key={t._id}
                         className='btn btn-sm btn-outline-dark me-1 mb-1'
-                        onClick={() => updateFilterField("tags", t)}>
-                        {t}
+                        onClick={() => navigate(`/leads?tags=${t.name}`)}>
+                        {t.name}
                       </button>
                     ))}
                   </div>
