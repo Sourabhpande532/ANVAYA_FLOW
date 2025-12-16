@@ -82,4 +82,49 @@ app.get("/:id/comments", async (req, res) => {
   }
 });
 
+// UPDATE COMMENT
+app.put("/comments/:commentId", async (req, res) => {
+  try {
+    const { commentId } = req.params;
+    const { commentText } = req.body;
+
+    if (!commentText) {
+      return res.status(400).json({
+        success: false,
+        message: "Comment text is required",
+      });
+    }
+
+    const comment = await Comment.findById(commentId);
+
+    if (!comment) {
+      return res.status(404).json({
+        success: false,
+        message: "Comment not found",
+      });
+    }
+
+    comment.commentText = commentText;
+    await comment.save();
+
+    await comment.populate({
+      path: "author",
+      select: "name email",
+    });
+
+    res.status(200).json({
+      success: true,
+      data: { comment },
+    });
+  } catch (error) {
+    console.error("Error updating comment:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Server error while updating comment",
+      error: error.message,
+    });
+  }
+});
+
+
 module.exports = app;
