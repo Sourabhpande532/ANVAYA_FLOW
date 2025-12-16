@@ -76,7 +76,7 @@ function LeadDetails() {
   /* ================= EDIT COMMENT ================= */
   const saveEdit = async (commentId) => {
     try {
-      await fetchJSON("/comments/" + commentId, {
+      await fetchJSON("/leads/comments/" + commentId, {
         method: "PUT",
         body: JSON.stringify({ commentText: editText }),
       });
@@ -111,39 +111,37 @@ function LeadDetails() {
       {/* TOAST */}
       {toast.show && (
         <div
-          className="toast show position-fixed top-0 end-0 m-3"
-          style={{ zIndex: 9999 }}
-        >
+          className='toast show position-fixed top-0 end-0 m-3'
+          style={{ zIndex: 9999 }}>
           <div className={`toast-header bg-${toast.type} text-white`}>
-            <strong className="me-auto">
+            <strong className='me-auto'>
               {toast.type === "success" ? "Success" : "Error"}
             </strong>
             <button
-              className="btn-close btn-close-white"
+              className='btn-close btn-close-white'
               onClick={() => setToast({ ...toast, show: false })}
             />
           </div>
-          <div className="toast-body">{toast.message}</div>
+          <div className='toast-body'>{toast.message}</div>
         </div>
       )}
 
       {/* LEAD HEADER */}
-      <div className="d-flex justify-content-between align-items-center">
+      <div className='d-flex justify-content-between align-items-center'>
         <h2>{lead.name}</h2>
         <div>
           <select
-            className="form-select"
+            className='form-select'
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            style={{ width: 200, display: "inline-block", marginRight: 8 }}
-          >
+            style={{ width: 200, display: "inline-block", marginRight: 8 }}>
             <option>New</option>
             <option>Contacted</option>
             <option>Qualified</option>
             <option>Proposal Sent</option>
             <option>Closed</option>
           </select>
-          <button className="btn btn-sm btn-primary" onClick={updateStatus}>
+          <button className='btn btn-sm btn-primary' onClick={updateStatus}>
             Save
           </button>
         </div>
@@ -160,60 +158,66 @@ function LeadDetails() {
 
       <form onSubmit={addComment}>
         {/* AUTHOR DROPDOWN */}
-        <div className="mb-2">
+        <div className='mb-2'>
           <select
-            className="form-select"
+            className='form-select'
             required
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
-          >
-            <option value="">Select Author</option>
+            disabled={agents.length === 0}>
+            <option value=''>
+              {agents.length === 0 ? "Loading agents" : "Select Author"}
+            </option>
             {agents.map((a) => (
               <option key={a._id} value={a._id}>
                 {a.name}
               </option>
             ))}
           </select>
+          {agents.length === 0 && (
+            <small className='text-muted'>
+              No agents available for this lead.
+            </small>
+          )}
         </div>
 
-        <div className="mb-2">
+        <div className='mb-2'>
           <textarea
-            className="form-control"
+            className='form-control'
             required
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
         </div>
 
-        <button className="btn btn-sm btn-primary">Add Comment</button>
+        <button className='btn btn-sm btn-primary' disabled={!author || !text}>
+          Add Comment
+        </button>
       </form>
 
       {/* COMMENT LIST */}
-      <div className="mt-3">
+      <div className='mt-3'>
         {comments.map((comment) => (
-          <div key={comment._id} className="border p-2 mb-2">
+          <div key={comment._id} className='border p-2 mb-2'>
             <strong>{comment.author?.name}</strong>{" "}
-            <small className="text-muted">
+            <small className='text-muted'>
               {new Date(comment.createdAt).toLocaleString()}
             </small>
-
             {editId === comment._id ? (
               <>
                 <textarea
-                  className="form-control my-2"
+                  className='form-control my-2'
                   value={editText}
                   onChange={(e) => setEditText(e.target.value)}
                 />
                 <button
-                  className="btn btn-sm btn-success me-2"
-                  onClick={() => saveEdit(comment._id)}
-                >
+                  className='btn btn-sm btn-success me-2'
+                  onClick={() => saveEdit(comment._id)}>
                   Save
                 </button>
                 <button
-                  className="btn btn-sm btn-secondary"
-                  onClick={() => setEditId(null)}
-                >
+                  className='btn btn-sm btn-secondary'
+                  onClick={() => setEditId(null)}>
                   Cancel
                 </button>
               </>
@@ -221,13 +225,13 @@ function LeadDetails() {
               <>
                 <p>{comment.commentText}</p>
                 <button
-                  className="btn btn-sm btn-link"
+                  style={{ textDecoration: "none" }}
+                  className='btn btn-sm btn-link'
                   onClick={() => {
                     setEditId(comment._id);
                     setEditText(comment.commentText);
-                  }}
-                >
-                  Edit
+                  }}>
+                  Edit📝🖋️
                 </button>
               </>
             )}
