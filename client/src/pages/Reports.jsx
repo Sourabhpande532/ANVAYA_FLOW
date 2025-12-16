@@ -28,8 +28,9 @@ const Reports = () => {
   const [pipeline, setPipeline] = useState(null);
   const [closedLastWeek, setClosedLastWeek] = useState([]);
 
-  const barChartRef = useRef(null);
-  const pieChartRef = useRef(null);
+  const statusBarRef = useRef(null);
+  const pipelinePieRef = useRef(null);
+  const agentBarRef = useRef(null);
 
   useEffect(() => {
     (async () => {
@@ -38,46 +39,35 @@ const Reports = () => {
         const closedRes = await fetchJSON("/report/last-week");
 
         setPipeline(pipelineRes);
-        setClosedLastWeek(closedRes);
+        setClosedLastWeek(closedRes || []);
       } catch (e) {
         console.error(e);
       }
     })();
   }, []);
 
-  // 📊 Create charts AFTER data loads
   useEffect(() => {
     if (!pipeline) return;
 
-    // ---- BAR CHART (Leads by Status) ----
-    const statusLabels = Object.keys(pipeline.byStatus || {});
-    const statusCounts = Object.values(pipeline.byStatus || {});
-
-    const barChart = new Chart(barChartRef.current, {
+    const statusChart = new Chart(statusBarRef.current, {
       type: "bar",
       data: {
-        labels: statusLabels,
+        labels: Object.keys(pipeline.byStatus || {}),
         datasets: [
           {
-            label: "Leads Count",
-            data: statusCounts,
+            label: "Leads",
+            data: Object.values(pipeline.byStatus || {}),
             backgroundColor: "#0d6efd",
           },
         ],
       },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: false },
-        },
-      },
+      options: { responsive: true, plugins: { legend: { display: false } } },
     });
 
-    // ---- PIE CHART (Closed vs Open) ----
-    const pieChart = new Chart(pieChartRef.current, {
+    const pipelineChart = new Chart(pipelinePieRef.current, {
       type: "pie",
       data: {
-        labels: ["Closed Last Week", "Others"],
+        labels: ["Closed Last Week", "In Pipeline"],
         datasets: [
           {
             data: [
@@ -88,27 +78,48 @@ const Reports = () => {
           },
         ],
       },
-      options: {
-        responsive: true,
+    });
+
+    const agentMap = {};
+    closedLastWeek.forEach((l) => {
+      const a = l.salesAgent || "Unassigned";
+      agentMap[a] = (agentMap[a] || 0) + 1;
+    });
+
+    const agentChart = new Chart(agentBarRef.current, {
+      type: "bar",
+      data: {
+        labels: Object.keys(agentMap),
+        datasets: [
+          {
+            label: "Closed Leads",
+            data: Object.values(agentMap),
+            backgroundColor: "#6610f2",
+          },
+        ],
       },
+      options: { responsive: true, plugins: { legend: { display: false } } },
     });
 
     return () => {
-      barChart.destroy();
-      pieChart.destroy();
+      statusChart.destroy();
+      pipelineChart.destroy();
+      agentChart.destroy();
     };
   }, [pipeline, closedLastWeek]);
 
   return (
-    <div className="container-fluid">
-      <h4 className="fw-bold mb-4">Reports</h4>
+    <div className="container-fluid px-2 px-md-4">
+      <h4 className="fw-bold mb-4 text-center text-md-start">
+        Anvaya CRM Reports
+      </h4>
 
-      {/* KPI Cards */}
+      {/* KPI CARDS */}
       <div className="row g-3 mb-4">
-        <div className="col-md-4">
-          <div className="card shadow-sm report-card">
-            <div className="card-body d-flex align-items-center gap-3">
-              <FaChartPie size={26} className="text-primary" />
+        <div className="col-12 col-md-4">
+          <div className="card shadow-sm h-100">
+            <div className="card-body d-flex gap-3 align-items-center">
+              <FaChartPie className="text-primary" size={26} />
               <div>
                 <div className="small text-muted">Leads in Pipeline</div>
                 <div className="fs-4 fw-bold">
@@ -119,85 +130,58 @@ const Reports = () => {
           </div>
         </div>
 
-        <div className="col-md-4">
-          <div className="card shadow-sm report-card">
-            <div className="card-body d-flex align-items-center gap-3">
-              <FaUserCheck size={26} className="text-success" />
+        <div className="col-12 col-md-4">
+          <div className="card shadow-sm h-100">
+            <div className="card-body d-flex gap-3 align-items-center">
+              <FaUserCheck className="text-success" size={26} />
               <div>
                 <div className="small text-muted">Closed Last Week</div>
-                <div className="fs-4 fw-bold">
-                  {closedLastWeek.length}
-                </div>
+                <div className="fs-4 fw-bold">{closedLastWeek.length}</div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="col-md-4">
-          <div className="card shadow-sm report-card">
-            <div className="card-body d-flex align-items-center gap-3">
-              <FaFire size={26} className="text-danger" />
+        <div className="col-12 col-md-4">
+          <div className="card shadow-sm h-100">
+            <div className="card-body d-flex gap-3 align-items-center">
+              <FaFire className="text-danger" size={26} />
               <div>
-                <div className="small text-muted">Top Activity</div>
-                <div className="fw-semibold">Sales Performance</div>
+                <div className="small text-muted">Performance</div>
+                <div className="fw-semibold">Sales Activity</div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Charts Section */}
-      <div className="row g-4 mb-4">
-        <div className="col-md-7">
+      {/* CHARTS */}
+      <div className="row g-4">
+        <div className="col-12 col-lg-6">
           <div className="card shadow-sm h-100">
             <div className="card-body">
-              <h6 className="fw-semibold mb-3">Leads by Status</h6>
-              <canvas ref={barChartRef} />
+              <h6 className="fw-semibold">Lead Status Distribution</h6>
+              <canvas ref={statusBarRef} />
             </div>
           </div>
         </div>
 
-        <div className="col-md-5">
+        <div className="col-12 col-lg-6">
           <div className="card shadow-sm h-100">
             <div className="card-body">
-              <h6 className="fw-semibold mb-3">Weekly Closure Ratio</h6>
-              <canvas ref={pieChartRef} />
+              <h6 className="fw-semibold">Closed vs Pipeline</h6>
+              <canvas ref={pipelinePieRef} />
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Closed Last Week Table */}
-      <div className="card shadow-sm">
-        <div className="card-body">
-          <h6 className="fw-semibold mb-3">Leads Closed Last Week</h6>
-
-          {closedLastWeek.length === 0 ? (
-            <p className="text-muted small">No leads closed last week.</p>
-          ) : (
-            <div className="table-responsive">
-              <table className="table table-sm align-middle">
-                <thead className="table-light">
-                  <tr>
-                    <th>Lead</th>
-                    <th>Sales Agent</th>
-                    <th>Closed On</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {closedLastWeek.map((c) => (
-                    <tr key={c.id}>
-                      <td>{c.name}</td>
-                      <td>{c.salesAgent}</td>
-                      <td>
-                        {new Date(c.closedAt).toLocaleDateString()}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+        <div className="col-12">
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <h6 className="fw-semibold">Leads Closed by Sales Agent</h6>
+              <canvas ref={agentBarRef} />
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

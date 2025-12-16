@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { LeadContext } from "../context/LeadContext";
 import { useNavigate } from "react-router-dom";
 import { fetchJSON } from "../api";
+import "../App.css"
 
 const AddLeads = () => {
   const { agents } = useContext(LeadContext);
@@ -43,7 +44,7 @@ const AddLeads = () => {
   };
 
   return (
-    <div className='container-fluid'>
+    <div className='container-fluid px-4'>
       {/* Page title */}
       <div className='mb-3'>
         <h4 className='fw-bold'>Add Lead</h4>
@@ -54,8 +55,8 @@ const AddLeads = () => {
 
       {/* Form Card */}
       <div className='row'>
-        <div className='col-xl-8 col-lg-9 col-md-12'>
-          <div className='card shadow-sm'>
+        <div className='col-12'>
+          <div className='card shadow-sm full-width-card'>
             <div className='card-body'>
               <form onSubmit={submit}>
                 {/* Lead Name */}
