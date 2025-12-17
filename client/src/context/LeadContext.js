@@ -6,6 +6,18 @@ const LeadContext = createContext();
 const LeadProvider = ({ children }) => {
   const [agents, setAgents] = useState([]);
   const [tags, setTags] = useState([]);
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    type: "Success",
+  });
+
+  const showToast = (message, type = "success") => {
+    setToast({ show: true, message, type });
+    setTimeout(() => {
+      setToast({ show: false, message: "", type });
+    }, 4000);
+  };
 
   useEffect(() => {
     /*NOTICE:
@@ -31,7 +43,7 @@ const LeadProvider = ({ children }) => {
   }, []);
 
   return (
-    <LeadContext.Provider value={{ agents, tags, setTags }}>
+    <LeadContext.Provider value={{ agents, tags, setTags, toast, setToast, showToast }}>
       {children}
     </LeadContext.Provider>
   );

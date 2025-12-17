@@ -71,4 +71,13 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.delete("/:id", async (req, res) => {
+  try {
+    await SalesAgent.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "Deleted" });
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
 module.exports = app;

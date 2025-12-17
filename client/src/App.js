@@ -8,6 +8,7 @@ import {
   AddLeads,
   Agents,
   Reports,
+  Settings,
 } from "./pages/index";
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path='/add-lead' element={<AddLeads />} />
           <Route path='/agents' element={<Agents />} />
           <Route path='/reports' element={<Reports />} />
+          <Route path='/settings' element={<Settings />} />
         </Routes>
       </div>
     </div>

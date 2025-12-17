@@ -1,25 +1,28 @@
 import { NavLink } from "react-router-dom";
-import "../component/style.css"
+import "../component/style.css";
 const Sidebar = () => {
   return (
-    <div className="sidebar bg-light border-end">
-      <h5 className="fw-bold mb-3">Anvaya</h5>
+    <div className='sidebar bg-light border-end'>
+      <h5 className='fw-bold mb-3'>Anvaya</h5>
 
-      <nav className="nav flex-column gap-1">
-        <NavLink className="nav-link" to="/">
+      <nav className='nav flex-column gap-1'>
+        <NavLink className='nav-link' to='/'>
           Dashboard
         </NavLink>
-        <NavLink className="nav-link" to="/leads">
+        <NavLink className='nav-link' to='/leads'>
           Leads
         </NavLink>
-        <NavLink className="nav-link" to="/add-lead">
+        <NavLink className='nav-link' to='/add-lead'>
           Add Lead
         </NavLink>
-        <NavLink className="nav-link" to="/agents">
+        <NavLink className='nav-link' to='/agents'>
           Agents
         </NavLink>
-        <NavLink className="nav-link" to="/reports">
+        <NavLink className='nav-link' to='/reports'>
           Reports
+        </NavLink>
+        <NavLink to='/settings' className='nav-link'>
+          Settings
         </NavLink>
       </nav>
     </div>
