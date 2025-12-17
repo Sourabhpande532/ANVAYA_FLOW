@@ -25,7 +25,9 @@ const Dashboard = () => {
         {/* HEADER */}
         <div className='col-12'>
           <div className='d-flex justify-content-between align-items-center'>
+  
             <h4 className='fw-bold mb-0 d-none d-md-block'>Dashboard</h4>
+            <h6 className='fw-bold mb-4 text-center text-md-start d-md-none'></h6>
             <Link to='/add-lead' className='btn btn-primary btn-sm'>
               + Add New Lead
             </Link>
@@ -47,9 +49,7 @@ const Dashboard = () => {
                     className='text-decoration-none'>
                     <div className='card shadow-sm h-100 dashboard-card'>
                       <div className='card-body'>
-                        <h6 className='fw-semibold text-white'>
-                          {lead.name}
-                        </h6>
+                        <h6 className='fw-semibold text-white'>{lead.name}</h6>
                         <p className='text-muted small mb-0'>
                           Status: {lead.status}
                         </p>
@@ -71,20 +71,16 @@ const Dashboard = () => {
 
             <h6 className='fw-semibold mb-2'>Quick Filters</h6>
             <div className='d-flex gap-2 flex-wrap'>
-              {[
-                "New",
-                "Contacted",
-                "Qualified",
-                "Proposal Sent",
-                "Closed",
-              ].map((status) => (
-                <Link
-                  key={status}
-                  to={`/leads?status=${status}`}
-                  className='btn btn-outline-secondary btn-sm'>
-                  {status}
-                </Link>
-              ))}
+              {["New", "Contacted", "Qualified", "Proposal Sent", "Closed"].map(
+                (status) => (
+                  <Link
+                    key={status}
+                    to={`/leads?status=${status}`}
+                    className='btn btn-outline-secondary btn-sm'>
+                    {status}
+                  </Link>
+                )
+              )}
             </div>
           </div>
         </div>
