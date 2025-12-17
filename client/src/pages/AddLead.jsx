@@ -47,7 +47,7 @@ const AddLeads = () => {
     <div className='container-fluid px-4'>
       {/* Page title */}
       <div className='mb-3'>
-        <h4 className='fw-bold'>Add Lead</h4>
+        <h4 className='fw-bold mb-4 text-center text-md-start'>Add Lead</h4>
         <p className='text-muted small mb-0'>
           Create and assign a new lead to a sales agent
         </p>

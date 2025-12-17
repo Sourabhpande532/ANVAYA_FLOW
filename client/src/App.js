@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import Sidebar from "./component/Sidebar";
 import {
   Dashboard,
@@ -14,7 +14,7 @@ function App() {
   return (
     <div className='d-flex'>
       <Sidebar />
-      <div className='container-fluid p-4 flex-grow-1 p-3'>
+      <div className='flex-grow-1 p-3 py-4 ms-md-4'>
         <Routes>
           <Route path='/' element={<Dashboard />} />
           <Route path='/leads' element={<LeadList />} />

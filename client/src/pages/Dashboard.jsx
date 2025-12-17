@@ -8,7 +8,8 @@ const Dashboard = () => {
         {/* Header */}
         <div className='col-12'>
           <div className='d-flex justify-content-between align-items-center'>
-            <h4 className='fw-bold mb-0'>Dashboard</h4>
+            <h4 className='fw-bold mb-0 d-none d-md-block'>Dashboard</h4>
+            <h6 className='fw-bold mb-0 d-md-none'></h6>
             <Link to='/add-lead' className='btn btn-primary btn-sm'>
               + Add New Lead
             </Link>
@@ -33,15 +34,14 @@ const Dashboard = () => {
 
         {/* Status + Filters */}
         <div className='col-lg-8'>
-          <div className='card shadow-sm'>
+          <div className='card shadow-sm'  style={{padding:"2rem"}}>
             <div className='card-body'>
               <h6 className='fw-semibold mb-3'>Lead Status</h6>
               <StatusAnalysis />
-
               <hr />
 
               <h6 className='fw-semibold mb-2'>Quick Filters</h6>
-              <div className='d-flex gap-2 flex-wrap'>
+              <div className='d-flex gap-2 flex-wrap py-2'>
                 <Link
                   to='/leads?status=New'
                   className='btn btn-outline-primary btn-sm'>
@@ -78,13 +78,13 @@ const Dashboard = () => {
             <div className='card-body'>
               <h6 className='fw-semibold mb-3'>Quick Actions</h6>
               <div className='d-grid gap-2'>
-                <Link to='/leads' className='btn btn-outline-dark btn-sm'>
+                <Link to='/leads' className='btn btn-outline-primary btn-sm'>
                   View All Leads
                 </Link>
-                <Link to='/agents' className='btn btn-outline-dark btn-sm'>
+                <Link to='/agents' className='btn btn-outline-secondary btn-sm'>
                   Manage Agents
                 </Link>
-                <Link to='/reports' className='btn btn-outline-dark btn-sm'>
+                <Link to='/reports' className='btn btn-outline-info btn-sm'>
                   View Reports
                 </Link>
               </div>

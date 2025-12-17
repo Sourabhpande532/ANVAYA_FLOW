@@ -48,7 +48,7 @@ function LeadList() {
 
   // Fetch leads whenever URL search changes
   useEffect(() => {
-    let cancelled = false; // avoid setting state after unmount
+    let cancelled = false;
     const fetchLeads = async () => {
       setLoading(true);
       try {
@@ -68,7 +68,6 @@ function LeadList() {
     };
 
     fetchLeads();
-    // cleanup to avoid setting state if component unmounts
     return () => {
       cancelled = true;
     };
@@ -91,7 +90,7 @@ function LeadList() {
 
   return (
     <div>
-      <h2>Leads</h2>
+      <h2 className="fw-bold mb-4 text-center text-md-start">Leads</h2>
       {/* Filters card */}
       <div className='card mb-3 p-3'>
         <div className='row g-2 align-items-end'>
@@ -241,7 +240,7 @@ function LeadList() {
                     {tags.map((t) => (
                       <button
                         key={t._id}
-                        className='btn btn-sm btn-outline-dark me-1 mb-1'
+                        className='btn btn-sm btn-outline-info me-1 mb-1'
                         onClick={() => navigate(`/leads?tags=${t.name}`)}>
                         {t.name}
                       </button>

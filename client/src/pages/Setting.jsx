@@ -73,7 +73,7 @@ const Settings = () => {
 
   return (
     <div className='container-fluid'>
-      <h4 className='fw-bold mb-4'>Settings</h4>
+      <h4 className='fw-bold mb-4 text-center text-md-start'>Settings</h4>
 
       {/* TOAST */}
       {toast.show && (

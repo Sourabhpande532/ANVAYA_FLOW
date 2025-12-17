@@ -33,7 +33,7 @@ const Agents = () => {
     <div className="container-fluid">
       {/* Page Header */}
       <div className="mb-3">
-        <h4 className="fw-bold">Sales Agents</h4>
+        <h4 className="fw-bold mb-4 text-center text-md-start">Sales Agents</h4>
         <p className="text-muted small mb-0">
           Manage and assign sales agents
         </p>
