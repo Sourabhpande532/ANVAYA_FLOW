@@ -2,10 +2,10 @@ import { useContext, useState } from "react";
 import { LeadContext } from "../context/LeadContext";
 import { useNavigate } from "react-router-dom";
 import { fetchJSON } from "../api";
-import "../App.css"
+import "../App.css";
 
 const AddLeads = () => {
-  const { agents } = useContext(LeadContext);
+  const { agents, showToast } = useContext(LeadContext);
   const [form, setForm] = useState({
     name: "",
     source: "Website",
@@ -15,10 +15,9 @@ const AddLeads = () => {
     timeToClose: 30,
     priority: "Medium",
   });
+
   const [tagInput, setTagInput] = useState("");
   const navigate = useNavigate();
-
-  const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const addTag = () => {
     if (!tagInput) return;
@@ -30,15 +29,24 @@ const AddLeads = () => {
   };
 
   const removeTag = (tag) =>
-    setForm((prev) => ({ ...prev, tags: prev.tags.filter((x) => x !== tag) }));
+    setForm((prev) => ({
+      ...prev,
+      tags: prev.tags.filter((x) => x !== tag),
+    }));
+  const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const submit = async (ev) => {
     ev.preventDefault();
     try {
-      await fetchJSON("/leads", { method: "POST", body: JSON.stringify(form) });
+      await fetchJSON("/leads", {
+        method: "POST",
+        body: JSON.stringify(form),
+      });
+
+      showToast("Lead created successfully ✅", "success"); // ✅ toaster
       navigate("/leads");
     } catch (e) {
-      alert("Failed to fetch");
+      showToast("Failed to create lead ❌", "danger"); // ✅ toaster
       console.error(e);
     }
   };
@@ -121,7 +129,7 @@ const AddLeads = () => {
                   </div>
 
                   <div className='col-md-2 mb-3'>
-                    <label className='form-label'>Time to Close</label>
+                    <label className='form-label'>Time to Close (days)</label>
                     <input
                       type='number'
                       min='1'
@@ -130,6 +138,24 @@ const AddLeads = () => {
                       value={form.timeToClose}
                       onChange={handle}
                     />
+                  </div>
+                </div>
+
+                {/* Row 2 – Lead Status */}
+                <div className='row'>
+                  <div className='col-md-4 mb-3'>
+                    <label className='form-label'>Lead Status</label>
+                    <select
+                      name='status'
+                      className='form-select'
+                      value={form.status}
+                      onChange={handle}>
+                      <option>New</option>
+                      <option>Contacted</option>
+                      <option>Qualified</option>
+                      <option>Proposal Sent</option>
+                      <option>Closed</option>
+                    </select>
                   </div>
                 </div>
 

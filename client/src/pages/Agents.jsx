@@ -1,18 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { fetchJSON } from "../api";
+import { LeadContext } from "../context/LeadContext";
+import Toast from "../component/Toast";
 
 const Agents = () => {
+  const { showToast } = useContext(LeadContext); // ✅ get toast
   const [agents, setAgents] = useState([]);
   const [form, setForm] = useState({ name: "", email: "" });
 
   useEffect(() => {
-    (async () => {
-      try {
-        const a = await fetchJSON("/agents");
-        setAgents(a.data.agents);
-      } catch (e) {}
-    })();
+    loadAgents();
   }, []);
+
+  const loadAgents = async () => {
+    try {
+      const res = await fetchJSON("/agents");
+      setAgents(res?.data?.agents || []);
+    } catch (e) {
+      showToast("Failed to load agents ❌", "danger");
+    }
+  };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -21,19 +28,24 @@ const Agents = () => {
         method: "POST",
         body: JSON.stringify(form),
       });
+
+      showToast("Agent added successfully ✅", "success"); // ✅ success toast
       setForm({ name: "", email: "" });
-      const a = await fetchJSON("/agents");
-      setAgents(a?.data?.agents);
+      loadAgents(); // refresh list
     } catch (err) {
-      alert("Failed to add agent");
+      showToast("Failed to add agent ❌", "danger"); // ✅ error toast
+      console.error(err);
     }
   };
 
   return (
     <div className="container-fluid">
+      <Toast/>
       {/* Page Header */}
       <div className="mb-3">
-        <h4 className="fw-bold mb-4 text-center text-md-start">Sales Agents</h4>
+        <h4 className="fw-bold mb-4 text-center text-md-start">
+          Sales Agents
+        </h4>
         <p className="text-muted small mb-0">
           Manage and assign sales agents
         </p>
@@ -103,7 +115,9 @@ const Agents = () => {
                     >
                       <div>
                         <div className="fw-semibold">{a.name}</div>
-                        <div className="text-muted small">{a.email}</div>
+                        <div className="text-muted small">
+                          {a.email}
+                        </div>
                       </div>
                     </li>
                   ))}
