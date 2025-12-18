@@ -25,7 +25,7 @@ function LeadDetails() {
   const [author, setAuthor] = useState("");
   const [status, setStatus] = useState("");
 
-  // edit comment states
+  // Edit comment states
   const [editId, setEditId] = useState(null);
   const [editText, setEditText] = useState("");
 

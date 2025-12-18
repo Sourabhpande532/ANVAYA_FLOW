@@ -6,7 +6,7 @@ import { LeadContext } from "../context/LeadContext";
 import { LeadCard } from "../component/LeadsCard/LeadCard";
 
 function LeadList() {
-  const { agents = [], tags = [] } = useContext(LeadContext); // agents/tags from context
+  const { agents = [], tags = [] } = useContext(LeadContext);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -56,7 +56,6 @@ function LeadList() {
         const path = "/leads" + (location.search ? location.search : "");
         const data = await fetchJSON(path);
         if (!cancelled) {
-          // expects API result shape: { data: { leads: [...] } }
           setLeads((data && data.data && data.data.leads) || []);
         }
       } catch (err) {
@@ -87,7 +86,6 @@ function LeadList() {
       alert("Failed to delete lead");
     }
   };
-
   return (
     <div>
       <h2 className="fw-bold mb-4 text-center text-md-start">Leads</h2>

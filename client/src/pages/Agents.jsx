@@ -4,7 +4,7 @@ import { LeadContext } from "../context/LeadContext";
 import Toast from "../component/Toast";
 
 const Agents = () => {
-  const { showToast } = useContext(LeadContext); // ✅ get toast
+  const { showToast } = useContext(LeadContext);
   const [agents, setAgents] = useState([]);
   const [form, setForm] = useState({ name: "", email: "" });
 
@@ -29,11 +29,11 @@ const Agents = () => {
         body: JSON.stringify(form),
       });
 
-      showToast("Agent added successfully ✅", "success"); // ✅ success toast
+      showToast("Agent added successfully ✅", "success");
       setForm({ name: "", email: "" });
       loadAgents(); // refresh list
     } catch (err) {
-      showToast("Failed to add agent ❌", "danger"); // ✅ error toast
+      showToast("Failed to add agent ❌", "danger"); 
       console.error(err);
     }
   };

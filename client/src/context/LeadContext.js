@@ -20,15 +20,6 @@ const LeadProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    /*NOTICE:
-    (async () => {
-      try {
-        const data = await fetchJSON("/agents");
-        setAgents(data.data?.agents);
-      } catch (error) {
-        console.error("Failed to fetch agents", error);
-      }
-    })(); below shorter*/
     async function load() {
       try {
         const data = await fetchJSON("/agents");
@@ -43,10 +34,34 @@ const LeadProvider = ({ children }) => {
   }, []);
 
   return (
-    <LeadContext.Provider value={{ agents, tags, setTags, toast, setToast, showToast }}>
+    <LeadContext.Provider
+      value={{ agents, tags, setTags, toast, setToast, showToast }}>
       {children}
     </LeadContext.Provider>
   );
 };
 const useLeadContext = () => useContext(LeadContext);
 export { LeadContext, LeadProvider, useLeadContext };
+
+/*  
+NOTICE:
+    (async () => {
+      try {
+        const data = await fetchJSON("/agents");
+        setAgents(data.data?.agents);
+      } catch (error) {
+        console.error("Failed to fetch agents", error);
+      }
+    })(); below shorter
+    async function load() {
+      try {
+        const data = await fetchJSON("/agents");
+        setAgents(data?.data?.agents || []);
+        const tagResponse = await fetchJSON("/tags");
+        setTags(tagResponse?.data?.tags || []);
+      } catch (error) {
+        console.error("Failed to fetch agents", error);
+      }
+    }
+    load();
+    */
