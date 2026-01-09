@@ -1,42 +1,151 @@
-# Product Requirements Document ||  Anvaya CRM
+# Anvaya CRM
 
-**Tech Stack:** MERN (`MongoDB, Express, React, Node.js`)
+---
 
-## Objective
+A MERN Stack Anvaya CRM system to manage leads, assign sales agents, track lead status, and analyze performance through dashboards and reports. <br>
+Build with a React frontend, Express/Node backend, MongoDB database.
 
-Build a lightweight CRM system to manage leads, assign sales agents, track lead status, and analyze performance through dashboards and reports.
+---
 
-## Key Learning Objectives
+## Demo Link
 
-- Understand full-stack MERN architecture
-- Build REST APIs and consume them in React
-- Implement global state using Context API
-- Handle CRUD operations with real-time UI updates
-- Design responsive UI using Bootstrap
+[Live Demo](https://anvaya-flow-uwge.vercel.app/)
 
-## Key Features
+---
 
-- Lead management (Create, View, Update, Delete leads)
-- Sales agent management and assignment
-- Lead status tracking (New, Contacted, Qualified, Proposal Sent, Closed)
-- Dashboard with status analytics and quick filters
-- Reports page with charts and summaries
+## Quick Start
+
+```
+git clone https://github.com/Sourabhpande532/ANVAYA_FLOW.git
+cd ANVAYA_FLOW
+npm install
+npm run dev  # or `npm Start` / `yarn dev`
+```
+
+---
+
+## Technologies
+
+- React Js
+- React Router
+- Node Js
+- Express Js
+- MongoDB
+- REST full API's
+
+---
+
+## Demo Video
+
+Watch a walkthrough (5-7 minutes) of all major features of this app: <br>
+[Drive Video Link](https://drive.google.com/file/d/1QB2OmRQmD42xffJOz2KtHc2u554_X0VX/view)
+
+---
+
+## Features
+
+**Dashboard**
+
+- Overview of all leads with status-based analytics
+- Quick filters for status, source, agent, and tags
+
+**Lead Management**
+
+- Create, view, update, and delete leads with details like status, source,tags,and assigned sales agent
+- View lead details and manage lead data efficiently
+
+**Sales Agent Management**
+
+- Manage sales agents with basic information
+- Assign and reassign leads to agents easily
+
+**Lead Status Tracking**
+
+- Track leads through defined stages: New, Contacted, Qualified, Proposal Sent, Closed
+- Ensures clear visibility of lead progress
+
+**Reports**
+
+- Charts and summaries for lead performance
+- Insights such as leads closed in the last 7 days
+
+**Notifications**
+
 - Toast notifications for success and error handling
-- Fully responsive UI (desktop & mobile friendly)
 
-## APIs Implemented
+**Responsive UI**
 
-1) GET /leads, POST /leads, DELETE /leads/:id
-2) GET /agents, POST /agents, DELETE /agents/:id
-3) GET /tags
-4) Centralized fetchJSON API handler
+- Mobile and desktop friendly layout for smooth user experience
 
-## Outcome & Impact
+---
 
-The system improves lead visibility, simplifies sales tracking, and provides actionable insights through analytics while demonstrating real-world MERN development practices.
+## API Reference
 
-## Links
+### GET /api/leads
 
- Live App: https://anvaya-flow-uwge.vercel.app/
+Retrieve all leads with status, priority,assigned agent, and tags.
+Sample Response:
 
- RECORDING: https://drive.google.com/file/d/1QB2OmRQmD42xffJOz2KtHc2u554_X0VX/view?usp=sharing
+```
+[
+  { _id, name, source, status, priority, salesAgent, tags, timeToClose }
+]
+
+```
+
+### GET /api/leads/:id
+
+Fetch details information for a single lead.
+Sample Response:
+
+```
+{ _id, name, source, status, priority, salesAgent, tags, notes }
+```
+
+### POST /api/leads
+
+Create a new lead and assign it to a sales agent.
+Sample Response:
+
+```
+{ _id, name, status, salesAgent }
+
+```
+
+### Delete /api/leads/:id
+
+Remove an existing lead from the system.
+Sample Response:
+
+```
+{ message: "Lead deleted successfully" }
+
+```
+
+### GET /api/agents
+
+List all available sales agents.
+Sample Response:
+
+```
+[{ _id, name, email }]
+
+```
+
+### POST /api/agents
+
+Add a new sales agent to the platform.
+Sample Response:
+
+```
+{ _id, name, email }
+
+```
+
+---
+
+## Contact
+
+For bugs or feature request, please reach out to [email](sourabhpande43@gmail.com)
+
+---
