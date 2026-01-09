@@ -173,7 +173,7 @@ REACT_APP_BASE_URL=http://localhost:5000/api
 
 ## Contact
 
-For bugs or feature request, please reach out to
-[sourabhpande43@gmail.com](mailto:sourabhpande43@email.com)
+For bugs or feature requests, please reach out to  
+[sourabhpande43@gmail.com](mailto:sourabhpande43@gmail.com)
 
 ---
