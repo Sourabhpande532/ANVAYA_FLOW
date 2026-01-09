@@ -31,7 +31,7 @@ npm run dev  # or `npm Start` / `yarn dev`
 - Node Js
 - Express Js
 - MongoDB
-- REST full API's
+- RESTful APIs
 
 ---
 
@@ -112,7 +112,7 @@ Sample Response:
 
 ```
 
-### Delete /api/leads/:id
+### DELETE /api/leads/:id
 
 Remove an existing lead from the system.
 Sample Response:
@@ -144,8 +144,36 @@ Sample Response:
 
 ---
 
+## Environment Setup 
+
+**Backend(/server/.env)**
+
+```
+# Server
+PORT=5000
+NODE_ENV=development
+
+# Database
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/anvaya
+
+# CORS
+CLIENT_URL=http://localhost:3000
+
+```
+
+**Frontend**
+
+```
+# API Base URL
+REACT_APP_BASE_URL=http://localhost:5000/api
+
+```
+
+---
+
 ## Contact
 
-For bugs or feature request, please reach out to [email](sourabhpande43@gmail.com)
+For bugs or feature request, please reach out to
+[sourabhpande43@gmail.com](mailto:sourabhpande43@email.com)
 
 ---
