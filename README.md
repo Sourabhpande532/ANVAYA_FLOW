@@ -47,11 +47,11 @@ Watch a walkthrough (5-7 minutes) of all major features of this app: <br>
 **Dashboard**
 
 - Overview of all leads with status-based analytics
-- Quick filters for status, source, agent, and tags
+- Quick filters for `status`, `source`, `agent`, and tags
 
 **Lead Management**
 
-- Create, view, update, and delete leads with details like status, source,tags,and assigned sales agent
+- `Create`, `view`, `update`, and `delete` leads with details like `status`, `source`,`tags`,and assigned sales agent
 - View lead details and manage lead data efficiently
 
 **Sales Agent Management**
@@ -61,13 +61,13 @@ Watch a walkthrough (5-7 minutes) of all major features of this app: <br>
 
 **Lead Status Tracking**
 
-- Track leads through defined stages: New, Contacted, Qualified, Proposal Sent, Closed
+- Track leads through defined stages: `New`, `Contacted`, `Qualified`, `Proposal Sent`, `Closed`
 - Ensures clear visibility of lead progress
 
 **Reports**
 
 - Charts and summaries for lead performance
-- Insights such as leads closed in the last 7 days
+- Insights such as leads closed in the last `7 days`
 
 **Notifications**
 
@@ -76,6 +76,14 @@ Watch a walkthrough (5-7 minutes) of all major features of this app: <br>
 **Responsive UI**
 
 - Mobile and desktop friendly layout for smooth user experience
+
+---
+
+## Reference
+
+![](./assets/Dashboard.png)
+---
+![](./assets/Chart.png)
 
 ---
 
@@ -144,7 +152,7 @@ Sample Response:
 
 ---
 
-## Environment Setup 
+## Environment Setup
 
 **Backend(/server/.env)**
 
@@ -173,6 +181,6 @@ REACT_APP_BASE_URL=http://localhost:5000/api
 
 ## Contact
 
-For bugs or feature requests, please reach out to  [sourabhpande43@gmail.com](mailto:sourabhpande43@gmail.com)
+For bugs or feature requests, please reach out to [sourabhpande43@gmail.com](mailto:sourabhpande43@gmail.com)
 
 ---
