@@ -2,7 +2,10 @@ const { initializeDatabase } = require("./db/db.connect");
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const dns = require("dns")
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
 initializeDatabase();
+
 
 const corsOption = {
   origin: "*",
