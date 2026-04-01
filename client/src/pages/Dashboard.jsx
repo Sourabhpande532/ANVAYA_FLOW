@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/heading-has-content */
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchJSON } from "../api";

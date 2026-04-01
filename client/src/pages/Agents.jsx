@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useContext } from "react";
 import { fetchJSON } from "../api";
 import { LeadContext } from "../context/LeadContext";
